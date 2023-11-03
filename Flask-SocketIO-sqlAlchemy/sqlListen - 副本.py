@@ -30,6 +30,12 @@ class User(db.Model):
 # with app.app_context():
 #     db.create_all()
 
+@app.route('/')
+def index():
+    data = User.query.all()
+    # return render_template('index.html', data=data)
+    return data
+
 # 查询数据
 @app.get('/user')
 def user_list():
@@ -43,12 +49,16 @@ def user_id(uid):
     user = db.get_or_404(User, uid)
     return {"message": "ok", "data": user.json()}
 
-@app.route('/')
-def index():
-    data = User.query.all()
-    # return render_template('index.html', data=data)
-    return data
+#分页查询
+@app.get("/userPagi")
+def user_paginate():
+    page = request.args.get("page", type=int, default=1)
+    per_page = request.args.get("per_page", type=int, default=1)
+    paginate = db.paginate(db.select(User).order_by(User.id), page=page, per_page=per_page)
+    print(paginate.items)
+    return {"message": "ok", "data": [user.json() for user in paginate.items]}
 
+# 添加数据
 @app.post('/addUser')
 def create_user():
     data = request.get_json()
@@ -57,5 +67,35 @@ def create_user():
     db.session.commit()
     return {"message": "ok", "data": user.json()}
 
+# 修改数据
+@app.put('/changeUser/<int:uid>')
+def change_user(uid):
+    user = db.get_or_404(User, uid)
+    data = request.get_json()
+    user.username = data.get('username')
+    user.email = data.get('email')
+    db.session.commit()
+    return {"message": "ok", "data": user.json()}
+
+
+# 删除数据
+@app.delete('/deleteUser/<int:uid>')
+def delete_user(uid):
+    user = db.get_or_404(User, uid)
+    db.session.delete(user)
+    db.session.commit()
+    return {"message": "ok", "data": user.json()}
+
+# 删除连续多条数据
+@app.delete('/deleteUsers/<int:uid>/<int:id>')
+def delete_users(uid, id):
+    for i in range(uid, id):
+        try:
+            user = db.get_or_404(User, i)
+            db.session.delete(user)
+        except:
+            continue
+    db.session.commit()
+    return {"message": "ok", "data": user.json()}
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port='5002', debug=True)     # 热更新
+    app.run(host='127.0.0.1', port='5001')     # 热更新

@@ -38,7 +38,8 @@ def main():
     thread_wss = threading.Thread(target = socketio.run , kwargs = {
         "app": app,
         "host": '127.0.0.1',
-        "port": 9999,
+        "port": 5002,
+        "allow_unsafe_werkzeug": True
     })
     thread_wss.start()
 
