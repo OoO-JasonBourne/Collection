@@ -21,7 +21,8 @@ def handle_disconnect():
 
 @socketio.on('message')
 def handle_message(data):
-    print('received message: ' + data)
+    print(data)
+    print('received message: ' + str(data))
 
 @socketio.on('json')
 def handle_json(json):
@@ -58,7 +59,7 @@ def main():
             thread_wss.join()
             break
         socketio.send(line)
-        socketio.emit("json", { "data": line })
+        # socketio.emit("json", { "data": line })
     print('done')
 
 if __name__ == '__main__':

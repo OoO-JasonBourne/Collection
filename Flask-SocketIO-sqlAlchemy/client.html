@@ -54,6 +54,7 @@
                         console.log('enter')
                         // socket.send(say.value);
                         socket.emit('message', { data: say.value });
+                        showStatus('send: ' + say.value);
                         say.value = '';
                     }
                 };
