@@ -59,7 +59,7 @@ def main():
             thread_wss.join()
             break
         socketio.send(line)
-        # socketio.emit("json", { "data": line })
+        socketio.emit("json", { "data": line })
     print('done')
 
 if __name__ == '__main__':

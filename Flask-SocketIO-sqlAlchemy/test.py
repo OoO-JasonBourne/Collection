@@ -1,4 +1,9 @@
 # -*- coding: utf-8 -*-
+
+'''
+对数据库进行增、删、改、查
+'''
+
 import requests
 from faker import Faker
 

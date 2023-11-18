@@ -1,3 +1,7 @@
+'''
+监测数据表变化
+'''
+
 from flask import Flask
 from apscheduler.schedulers.background import BackgroundScheduler
 import pymysql
