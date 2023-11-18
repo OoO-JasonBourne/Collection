@@ -21,7 +21,7 @@ def handle_disconnect():
 
 @socketio.on('message')
 def handle_message(data):
-    print(data)
+    # print(data)
     print('received message: ' + str(data))
 
 @socketio.on('json')
