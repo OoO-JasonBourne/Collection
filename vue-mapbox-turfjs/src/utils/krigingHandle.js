@@ -39,9 +39,12 @@ class KrigingData {
         // return fc
         const collection = turf.featureCollection(fc);
 
-        const breaks = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50];
+
+        const breaks = [-30, -22, -14, -6, 2, 10, 18, 26, 34, 42, 50];
+        // const breaks = [-20, -16, -12, -8, -4, 0, 4, 8, 12, 16, 20];
+        const isolines = turf.isolines(collection, breaks, { zProperty: 'value' });
         const isobands = turf.isobands(collection, breaks, { zProperty: 'value' });
-        return [collection, isobands]
+        return [isolines, isobands]
         //利用网格计算点集
         function gridFeatureCollection(grid, xlim, ylim) {
             var range = grid.zlim[1] - grid.zlim[0];

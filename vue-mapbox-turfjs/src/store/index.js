@@ -6,6 +6,12 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     map: null,
+    layerStatus: {
+      point: true,
+      line: false,
+      surface: false,
+      label: false,
+    },
     baseMap : {
       current: 'mapbox://styles/mapbox/streets-v11',
       day: 'mapbox://styles/mapbox/streets-v11',
@@ -24,7 +30,12 @@ export default new Vuex.Store({
     mapInit(state, map){
       // 为 map 赋值
       state.map = map
-    }
+    },
+    changeLayerStatus(state, payload) {
+      const { atti, status } = payload;
+      // 动态属性绑定
+      state.layerStatus[atti] = status;
+    }   
   },
   actions: {},
   modules: {},

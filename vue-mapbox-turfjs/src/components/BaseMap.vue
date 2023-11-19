@@ -30,7 +30,6 @@ export default {
             // 改变state中 current 的值
             this.baseSwitch(this.text_layers[index])
             this.selectedIndex = index; // 追踪当前选中图片的索引
-
         },
     }
 }
